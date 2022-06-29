@@ -1,43 +1,54 @@
-const adminControllers = require("../models/adminUsers")
-const brcypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
+const adminControllers = require("../models/adminUsers");
+const brcypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { Router } = require("express");
 const adminUsers = require("../models/adminUsers");
-const SECRET_KEY = 'NOTESAPI';
-const route = require('express').Router();
+const SECRET_KEY = "NOTESAPI";
+const route = require("express").Router();
 
-
-const login = async (req,res) => { 
+const login = async (req,res) => {
     try{
 
-        const {fname,lname, email, password,created_at,updated_at} = req.body;
-        const hashedPasswd = await brcypt.hashSync(password ,10)
-        const result = await adminUsers.create({
+        const hashedPasswd = await brcypt.hashSync(req.body.password ,10)
+       //returns the first document that matches the query criteria or null
 
-            fname: fname,
-            lname: lname,
-            email : email,
-            password : hashedPasswd,
-            created_at : created_at,
-            updated_at : updated_at
-
-        
-        });
-
+       const existingUser = await adminUsers.find({email : req.body.email});
        
-        const existingUser= await adminUsers.findOne({email : email});
+       console.log(existingUser);
+    //    res.send(existingUser)
         if(existingUser){
-            return res.status(400).json({message :"user already exists"})
-        }
+            const jsonLogin = JSON.stringify(existingUser);
+            return res.send(jsonLogin)
+            //return res.status(200).json({existingUser , message : "admin login successfully"})
+        } else {
+            console.log("wrong, something went wrong")
+           return res.send({message : "something went wrong "})
+        };
 
-       
-
-        const token = jwt.login({ email : result.email, id : result.id}, SECRET_KEY);
-        res.status(201).json({user : result, token:token})
-    } catch(err){
+        // const token = jwt.login({ email : result.email, id : result.id}, SECRET_KEY);
+        // res.status(201).json({user : result, token:token}
+    }catch(err) {
         console.log(err);
-        res.status(500).json({message : "something went wrong"})
+        res.sendStatus(500).json({message : err.message})
     }
+
 }
 
+
 module.exports = { login };
+
+// const login = async (req, res) => {
+//   try {
+//     const hashedPasswd = await brcypt.hashSync(req.body.password);
+//     const admin = await adminUsers.find(
+//       { email: req.body.email },
+//       (err, data) => {
+//         res.send(data);
+//       }
+//     );
+//   } catch (e) {
+//     res.send(e);
+//   }
+// };
+
+// module.exports = { login };
