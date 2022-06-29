@@ -1,4 +1,4 @@
-const { string } = require("joi");
+const Joi = require("joi");
 const mongoose = require("mongoose");
 
 const adminSchema = new mongoose.Schema({
@@ -14,8 +14,7 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        lowercase: true,
-        match: [/.+\@.+\..+/, 'Please enter a valid email']
+        lowercase: true
     },
     // email: {
     //     type: String,
@@ -31,13 +30,13 @@ const adminSchema = new mongoose.Schema({
       created_at : { 
         type: Date, 
         required: true, 
-        default: Date.now 
+        default: Date.now() 
     },
     updated_at : { 
         type: Date, 
         required: true, 
-        default: Date.now 
+        default: Date.now()
     }
 });
 
-module.exports = mongoose.model("adminUsers", adminSchema);
+module.exports = mongoose.model("adminusers", adminSchema);
