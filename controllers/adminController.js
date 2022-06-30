@@ -32,9 +32,11 @@ const login = async (req, res) => {
          } else {  
            
             let Loginprofile = await CustomerService.getloginProfile(req.body.email, req.body.password);
+           
+
            const token = await jwt.sign({ _id: CustomerService.getloginProfile._id }, MASTER_KEY);
            console.log(token)
-           return res.status(200).send({ "admin-token": token, userProfile:Loginprofile});
+           return res.status(200).send({ "access-token": token});
            
         }
     }catch(error){
