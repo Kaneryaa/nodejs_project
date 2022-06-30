@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const constants=require("../config/constant");
-const users = require('../models/customerModel');
+const users = require('../controllers/adminController');
 
 
 const getCustomerProfile=async (userId) => {

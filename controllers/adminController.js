@@ -2,46 +2,45 @@ const adminControllers = require("../models/adminUsers");
 const brcypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Router } = require("express");
-const adminUsers = require("../models/adminUsers");
 const MASTER_KEY = "NOTESAPI";
 const route = require("express").Router();
 const Joi = require('joi');
+const CustomerService= require("../services/adminService");
+const response=require("../utils/responsehandler");
+const { STATUS } =require("../config/constant");
+const { SUCCESS, ERROR } = require('../config/message');
 
 const login = async (req, res) => {
     
     try{
-         const email = req.body.email ;
-         const password = req.body.password;
+       
          const validateObject = Joi.object({
             email: Joi.string().required(),
             password : Joi.string().required()
             // password : Joi.string().required()
           });
-          let emailSchema={email};
-          let getemail = validateObject.validate(emailSchema)
-          console.log(getemail);
-
-       
-
-        // console.log(userfetch.password);
-        const userfetch = await adminUsers.findOne({ email: req.body.email });
-       
-          console.log(userfetch)
-          console.log(userfetch.password);
-
-        const comparePass = await brcypt.compare(req.body.password,userfetch.password);
-        console.log(comparePass);
-
-        if(!comparePass){
-            return res.send("password does not matched");
+          let body=req.body;
+          let login = validateObject.validate({...body})
+        //   console.log(getemail);
+          
+        //   console.log(userfetch)
+        //   console.log(userfetch.password);
+         if(login.error){
+            console.log(login)
+           return response.responseHandler(res, STATUS.BAD_REQUEST, [], [{"message":login.error.message}]);
+          
+         } else {  
+           
+            let Loginprofile = await CustomerService.getloginProfile(req.body.email, req.body.password);
+           const token = await jwt.sign({ _id: CustomerService.getloginProfile._id }, MASTER_KEY);
+           console.log(token)
+           return res.status(200).send({ "admin-token": token, userProfile:Loginprofile});
+           
         }
-
-        const token = await jwt.sign({ _id: userfetch._id }, MASTER_KEY);
-        console.log(token)
-        return res.status(200).header("admin-token", token).send({ "admin-token": token });
-    }catch(err){
-        console.log(err);
-        return res.send(err.message);
+    }catch(error){
+        console.log(error);
+        response.responseHandler(res, STATUS.BAD_REQUEST, [], [] , ERROR.GLOBAL, false);
+        return;
     }
     
   
