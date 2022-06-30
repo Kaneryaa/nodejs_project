@@ -5,20 +5,30 @@ const { Router } = require("express");
 const adminUsers = require("../models/adminUsers");
 const MASTER_KEY = "NOTESAPI";
 const route = require("express").Router();
-
+const Joi = require('joi');
 const login = async (req, res) => {
     
     try{
-         const email = req.body.emailid;
+         const email = req.body.email ;
+         const password = req.body.password;
+         const validateObject = Joi.object({
+            email: Joi.string().required(),
+            password : Joi.string().required()
+            // password : Joi.string().required()
+          });
+          let emailSchema={email};
+          let getemail = validateObject.validate(emailSchema)
+          console.log(getemail);
 
+       
+
+        // console.log(userfetch.password);
         const userfetch = await adminUsers.findOne({ email: req.body.email });
-
-        console.log(userfetch)
-
-        console.log(userfetch.password);
+       
+          console.log(userfetch)
+          console.log(userfetch.password);
 
         const comparePass = await brcypt.compare(req.body.password,userfetch.password);
-
         console.log(comparePass);
 
         if(!comparePass){
