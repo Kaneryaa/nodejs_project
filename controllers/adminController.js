@@ -36,7 +36,9 @@ const login = async (req, res) => {
 
            const token = await jwt.sign({ _id: CustomerService.getloginProfile._id }, MASTER_KEY);
            console.log(token)
-           return res.status(200).send({ "access-token": token});
+        //    return res.status(200).send({ "accessToken": token});
+          return response.responseHandler(res, STATUS.SUCCESS, [{"Successful":token}], [], SUCCESS.CUSTOMER_PROFILE, true);
+
            
         }
     }catch(error){
