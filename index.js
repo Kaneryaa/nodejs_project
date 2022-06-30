@@ -5,6 +5,7 @@ var cors = require('cors');
 var app = express();
 app.use(cors());
 const admnroutes = require('./routes/adminRoutes')
+const customroutes = require('./models/customerModel')
 
 app.use(express.json());
 
@@ -20,6 +21,7 @@ app.get('/auth', function (req, res) {
 });
 
 app.use('/auth/admin',admnroutes);
+app.use('/auth/custom',customroutes);
 
 app.use(express.json({ extended: false }));
 app.listen(3001, function () {

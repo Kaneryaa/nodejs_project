@@ -1,32 +1,33 @@
 {
-    "name": "rangeplus_auth_microservice",
-    "version": "1.0.0",
-    "description": "Authentication Apis",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/boppotech/rangeplus-auth-microservice.git"
-    },
-    "author": "Amruta Vichare",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/boppotech/rangeplus-auth-microservice.git/issues"
-    },
-    "homepage": "https://github.com/boppotech/rangeplus-auth-microservice.git#readme",
-    "dependencies": {
-        "bcrypt": "^5.0.1",
-        "bcryptjs": "^2.4.3",
-        "cors": "^2.8.5",
-        "dotenv": "^14.3.2",
-        "express": "^4.18.1",
-        "joi": "^17.6.0",
-        "jsonwebtoken": "^8.5.1",
-        "mongoose": "^6.4.0",
-        "nodemon": "^2.0.18",
-        "path": "^0.12.7"
-    }
+  "name": "rangeplus_auth_microservice",
+  "version": "1.0.0",
+  "description": "Authentication Apis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boppotech/rangeplus-auth-microservice.git"
+  },
+  "author": "Amruta Vichare",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/boppotech/rangeplus-auth-microservice.git/issues"
+  },
+  "homepage": "https://github.com/boppotech/rangeplus-auth-microservice.git#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^14.3.2",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.1",
+    "nodemon": "^2.0.18",
+    "path": "^0.12.7"
+  },
+  "keywords": []
 }
