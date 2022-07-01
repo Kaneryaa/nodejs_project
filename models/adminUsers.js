@@ -16,13 +16,6 @@ const adminSchema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
-    // email: {
-    //     type: String,
-    //     required: true,
-    //     match: [/.+\@.+\..+/, 'Please enter a valid email'],
-    //     validate: [validatePresenceOf, 'Email cannot be blank']
-    // },
-    
     password: {
         type: String,
         required: true,
