@@ -19,12 +19,20 @@ app.use(
 app.use(bodyParser.json());
 // Import Routes
 const userRoutes = require("./routes/user");
-
+const admnroutes = require("./routes/adminRoutes");
+const customroutes = require("./models/customerModel");
 // app configs.
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(cors());
 app.use("/api", userRoutes);
+
+app.get("/auth", function (req, res) {
+  res.send("hello world");
+});
+
+app.use("/auth/admin", admnroutes);
+app.use("/auth/custom", customroutes);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 const db = config.DB_HOST;
