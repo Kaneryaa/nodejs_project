@@ -33,6 +33,15 @@ const customloginSchema = new mongoose.Schema({
     mobileNumber : {
         type : Number
     }, 
+
+    isEmailVerified : {
+      type:Boolean
+    },
+
+    isMobileverified : {
+         
+    },
+
      address: {
           country:{
              type : String

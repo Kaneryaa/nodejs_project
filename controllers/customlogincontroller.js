@@ -7,40 +7,36 @@ const MASTER_KEY = "NOTESAPI";
 const jwt = require("jsonwebtoken")
 
 async function getlogin(req,res,next){
-    try{
+      try{
 
       let body = req.body;
       console.log(req.body);
       const validateObject = Joi.object({
-        fname : Joi.string().required(),
-        lname : Joi.string().requied(),
-        email : Joi.string().trim().lowercase().required(),
-        profilePic : Joi.string(),
-        customerType : Joi.strim(),
-        isActive : Joi.boolean(),
-        mobileNumber:Joi.number(),
-        address:Joi.string()
+        email: Joi.string().required(),
+        password : Joi.string().required()
+
      });
       let finalSchema={...body};
       let getSuccess = validateObject.validate(finalSchema)
       console.log(finalSchema);
       if (getSuccess.error) {
-        console.log(login)
+        console.log(getSuccess)
         return response.responseHandler(res, STATUS.BAD_REQUEST, [], [{"message":getSuccess.error.message}]);
        
       } else {  
         
-         let userlogin = await CustomerService.getcustmrlogin(req.body.email, req.body.password);
-        const token = await jwt.sign({ _id: CustomerService.getcustmrlogin._id }, MASTER_KEY);
+         let userlogin = await customloginService.getcustmrlogin(req.body.email, req.body.password);
+        const token = await jwt.sign({ _id: customloginService.getcustmrlogin._id }, MASTER_KEY);
         console.log(token)
-        return res.status(200).send({ "access token": token, userlogin:userlogin});
+        return response.responseHandler(res, STATUS.SUCCESS, [{"access Token":token}], [], SUCCESS.CUSTOMER_PROFILE, true);
+
         
      }
 
     }catch(error){
         console.log(error);
         response.responseHandler(res, STATUS.BAD_REQUEST, [], [] , ERROR.GLOBAL, false);
-        return;
+        return res.send(error.message);
     }
 }
 

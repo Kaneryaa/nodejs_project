@@ -1,7 +1,5 @@
-const adminControllers = require("../models/adminUsers");
 const brcypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { Router } = require("express");
 const MASTER_KEY = "NOTESAPI";
 const route = require("express").Router();
 const Joi = require('joi');
@@ -17,14 +15,10 @@ const login = async (req, res) => {
          const validateObject = Joi.object({
             email: Joi.string().required(),
             password : Joi.string().required()
-            // password : Joi.string().required()
           });
           let body=req.body;
           let login = validateObject.validate({...body})
-        //   console.log(getemail);
-          
-        //   console.log(userfetch)
-        //   console.log(userfetch.password);
+
          if(login.error){
             console.log(login)
            return response.responseHandler(res, STATUS.BAD_REQUEST, [], [{"message":login.error.message}]);
@@ -32,9 +26,11 @@ const login = async (req, res) => {
          } else {  
            
             let Loginprofile = await CustomerService.getloginProfile(req.body.email, req.body.password);
-           const token = await jwt.sign({ _id: CustofmerService.getloginProfile._id }, MASTER_KEY);
+           const token = await jwt.sign({ _id: CustomerService.getloginProfile._id }, MASTER_KEY);
            console.log(token)
-           return res.status(200).send({ "admin-token": token, userProfile:Loginprofile});
+        //    return res.status(200).send({ "accessToken": token});
+          return response.responseHandler(res, STATUS.SUCCESS, [{"Successful":token}], [], SUCCESS.CUSTOMER_PROFILE, true);
+
            
         }
     }catch(error){

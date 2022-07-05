@@ -9,6 +9,9 @@ const getloginProfile=async (email,password) => {
 
         const userfetch = await adminUsers.findOne({email : email});
         const comparePass = await brcypt.compare(password,userfetch.password);
+        if(!comparePass) {
+            return false
+        }
         return userfetch
     }catch(e){
         console.log(e);
