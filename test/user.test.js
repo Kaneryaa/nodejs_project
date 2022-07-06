@@ -13,7 +13,6 @@ describe("User", function () {
   };
   describe("Register User", function () {
     it("should register a user", (done) => {
-      console.log("Registrering user to db");
       chai
         .request("http://localhost:3000")
         .post("/api/user/")
