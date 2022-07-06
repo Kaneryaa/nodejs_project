@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const admnroutes = require('./routes/adminRoutes')
 const customroutes = require('./models/customerModel')
 const customerRoutes = require('./routes/customloginRouter')
+const forgtpassRoutes=require('./routes/forgotpasswd')
 
 var cors = require('cors');
 var app = express();
@@ -23,6 +24,7 @@ app.get('/auth', function (req, res) {
 app.use('/auth/admin',admnroutes);
 app.use('/auth/custom',customroutes);
 app.use('/auth/customer',customerRoutes);
+app.use('/auth/forgot',forgtpassRoutes);
 
 app.use(express.json({ extended: false }));
 app.listen(3001, function () {
