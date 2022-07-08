@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 const userRoutes = require("./routes/user");
 const admnroutes = require("./routes/adminRoutes");
 const customroutes = require("./models/customerModel");
+const frgtPasswd = require("./routes/forgotpasswdRouter");
 // app configs.
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
@@ -33,11 +34,13 @@ app.get("/auth", function (req, res) {
 
 app.use("/auth/admin", admnroutes);
 app.use("/auth/custom", customroutes);
+app.use("/auth/frgt", frgtPasswd);
+// app.use("/auth/ForgotPswd",)
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 const db = config.DB_HOST;
 mongoose.connect(
-  db,
+  "mongodb+srv://Danish12:Danish@cluster0.vma7rgk.mongodb.net/RangePlus",
   { useNewUrlParser: true, useUnifiedTopology: true },
   function (err) {
     if (err) {
