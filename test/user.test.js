@@ -11,7 +11,7 @@ describe("User", function () {
     password: "12456789",
     name: "Mayur thosar",
   };
-  describe("Register User", function () {
+  describe("Register User", async () => {
     it("should register a user", (done) => {
       chai
         .request("http://localhost:3000")
